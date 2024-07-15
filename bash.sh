@@ -1,0 +1,1 @@
+docker compose down && rm -rf registry && docker compose up -d

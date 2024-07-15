@@ -1,0 +1,72 @@
+services:
+  ## docker hub
+  dockerhub:
+    container_name: reg-docker-hub
+    image: dqzboy/registry:latest
+    restart: always
+    environment:
+      - http_proxy=http://10.64.0.60:2080
+      - https_proxy=http://10.64.0.60:2080
+    volumes:
+      - ./registry/data:/var/lib/registry
+      - ./registry-hub.yml:/etc/docker/registry/config.yml
+      #- ./htpasswd:/auth/htpasswd
+    ports:
+      - 51000:5000
+    networks:
+      - registry-net
+
+
+  registry-ui:
+    container_name: registry-ui
+    image: dqzboy/docker-registry-ui:latest
+    environment:
+      - DOCKER_REGISTRY_URL=http://reg-docker-hub:5000
+      # [必须]使用 openssl rand -hex 16 生成唯一值
+      - SECRET_KEY_BASE=9f18244a1e1179fa5aa4a06a335d01b2
+      # 启用Image TAG 的删除按钮
+      - ENABLE_DELETE_IMAGES=true
+      - NO_SSL_VERIFICATION=true
+    restart: always
+    ports:
+      - 50000:8080
+    networks:
+      - registry-net
+ ## registry.k8s.io
+  k8s:
+    container_name: reg-k8s
+    image: registry:latest
+    restart: always
+    environment:
+      - http_proxy=http://10.64.0.60:2080
+      - https_proxy=http://10.64.0.60:2080
+
+    volumes:
+      - ./registry/data:/var/lib/registry
+      - ./registry-k8s.yml:/etc/docker/registry/config.yml
+      #- ./htpasswd:/auth/htpasswd
+    ports:
+      - 55000:5000
+    networks:
+      - registry-net
+
+
+  dockerhub-v1:
+    container_name: reg-docker-hub-v1
+    image: dqzboy/registry:latest
+    restart: always
+    environment:
+      - http_proxy=http://10.64.0.60:2080
+      - https_proxy=http://10.64.0.60:2080
+    volumes:
+      - ./registry/data:/var/lib/registry
+      - ./registry-hub-v1.yml:/etc/docker/registry/config.yml
+      #- ./htpasswd:/auth/htpasswd
+    ports:
+      - 56000:5000
+    networks:
+      - registry-net
+
+
+networks:
+  registry-net:
