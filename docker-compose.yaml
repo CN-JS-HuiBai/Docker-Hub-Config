@@ -4,9 +4,6 @@ services:
     container_name: reg-docker-hub
     image: dqzboy/registry:latest
     restart: always
-    environment:
-      - http_proxy=http://10.64.0.60:2080
-      - https_proxy=http://10.64.0.60:2080
     volumes:
       - ./registry/data:/var/lib/registry
       - ./registry-hub.yml:/etc/docker/registry/config.yml
@@ -37,9 +34,6 @@ services:
     container_name: reg-k8s
     image: registry:latest
     restart: always
-    environment:
-      - http_proxy=http://10.64.0.60:2080
-      - https_proxy=http://10.64.0.60:2080
 
     volumes:
       - ./registry/data:/var/lib/registry
@@ -55,9 +49,6 @@ services:
     container_name: reg-docker-hub-v1
     image: dqzboy/registry:latest
     restart: always
-    environment:
-      - http_proxy=http://10.64.0.60:2080
-      - https_proxy=http://10.64.0.60:2080
     volumes:
       - ./registry/data:/var/lib/registry
       - ./registry-hub-v1.yml:/etc/docker/registry/config.yml
@@ -70,3 +61,7 @@ services:
 
 networks:
   registry-net:
+
+#    environment:
+#      - http_proxy=http://10.64.0.60:2080
+#      - https_proxy=http://10.64.0.60:2080
