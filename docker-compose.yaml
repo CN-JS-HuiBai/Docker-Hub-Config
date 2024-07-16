@@ -1,22 +1,5 @@
 services:
-  ## docker hub
-  dockerhub:
-    container_name: reg-docker-hub
-    image: dqzboy/registry:latest
-    restart: always
-    volumes:
-      - ./registry/data:/var/lib/registry
-      - ./registry-hub.yml:/etc/docker/registry/config.yml
-      #- ./htpasswd:/auth/htpasswd
-    ports:
-      - 51000:5000
-    networks:
-      - registry-net
-    environment:
-      - http_proxy=http://10.64.0.60:2080
-      - https_proxy=http://10.64.0.60:2080
-
-
+ ##Registry-UI
   registry-ui:
     container_name: registry-ui
     image: dqzboy/docker-registry-ui:latest
@@ -48,8 +31,23 @@ services:
       - 55000:5000
     networks:
       - registry-net
-
-
+  ## docker hub
+  dockerhub:
+    container_name: reg-docker-hub
+    image: dqzboy/registry:latest
+    restart: always
+    volumes:
+      - ./registry/data:/var/lib/registry
+      - ./registry-hub.yml:/etc/docker/registry/config.yml
+      #- ./htpasswd:/auth/htpasswd
+    ports:
+      - 51000:5000
+    networks:
+      - registry-net
+    environment:
+      - http_proxy=http://10.64.0.60:2080
+      - https_proxy=http://10.64.0.60:2080
+  ## docker hub V1
   dockerhub-v1:
     container_name: reg-docker-hub-v1
     image: dqzboy/registry:latest
@@ -57,7 +55,6 @@ services:
     environment:
       - http_proxy=http://10.64.0.60:2080
       - https_proxy=http://10.64.0.60:2080
-
     volumes:
       - ./registry/data:/var/lib/registry
       - ./registry-hub-v1.yml:/etc/docker/registry/config.yml
@@ -68,6 +65,6 @@ services:
       - registry-net
 
 
+
 networks:
   registry-net:
-
