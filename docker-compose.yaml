@@ -1,5 +1,55 @@
 services:
- ##Registry-UI
+  ## docker hub
+  dockerhub:
+    container_name: reg-docker-hub
+    image: dqzboy/registry:latest
+    restart: always
+    environment:
+      - OTEL_TRACES_EXPORTER=none
+      #- http=http://host:port
+      #- https=http://host:port
+    volumes:
+      - ./registry/data:/var/lib/registry
+      - ./registry-hub.yml:/etc/distribution/config.yml
+      #- ./htpasswd:/auth/htpasswd
+    ports:
+      - 51000:5000
+    networks:
+      - registry-net
+  dockerhub-v1:
+    container_name: reg-docker-hub-v1
+    image: dqzboy/registry:latest
+    restart: always
+    environment:
+      - OTEL_TRACES_EXPORTER=none
+      #- http=http://host:port
+      #- https=http://host:port
+    volumes:
+      - ./registry/data:/var/lib/registry
+      - ./registry-hub-v1.yml:/etc/distribution/config.yml
+      #- ./htpasswd:/auth/htpasswd
+    ports:
+      - 56000:5000
+    networks:
+      - registry-net
+  k8s:
+    container_name: reg-k8s
+    image: dqzboy/registry:latest
+    restart: always
+    environment:
+      - OTEL_TRACES_EXPORTER=none
+      #- http=http://host:port
+      #- https=http://host:port
+    volumes:
+      - ./registry/data:/var/lib/registry
+      - ./registry-k8s.yml:/etc/distribution/config.yml
+      #- ./htpasswd:/auth/htpasswd
+    ports:
+      - 55000:5000
+    networks:
+      - registry-net
+
+  ## UI
   registry-ui:
     container_name: registry-ui
     image: dqzboy/docker-registry-ui:latest
@@ -15,51 +65,6 @@ services:
       - 50000:8080
     networks:
       - registry-net
- ## registry.k8s.io
-  k8s:
-    container_name: reg-k8s
-    image: registry:latest
-    restart: always
-    volumes:
-      - ./registry/data:/var/lib/registry
-      - ./registry-k8s.yml:/etc/docker/registry/config.yml
-      #- ./htpasswd:/auth/htpasswd
-    ports:
-      - 55000:5000
-    networks:
-      - registry-net
-  ## docker hub
-  dockerhub:
-    container_name: reg-docker-hub
-    image: dqzboy/registry:latest
-    restart: always
-    volumes:
-      - ./registry/data:/var/lib/registry
-      - ./registry-hub.yml:/etc/docker/registry/config.yml
-      #- ./htpasswd:/auth/htpasswd
-    ports:
-      - 51000:5000
-    networks:
-      - registry-net
-  ## docker hub V1
-  dockerhub-v1:
-    container_name: reg-docker-hub-v1
-    image: dqzboy/registry:latest
-    restart: always
-    volumes:
-      - ./registry/data:/var/lib/registry
-      - ./registry-hub-v1.yml:/etc/docker/registry/config.yml
-      #- ./htpasswd:/auth/htpasswd
-    ports:
-      - 56000:5000
-    networks:
-      - registry-net
-
-
 
 networks:
   registry-net:
-
-#    environment:
-#      - http_proxy=http://10.64.0.60:2080
-#      - https_proxy=http://10.64.0.60:2080
