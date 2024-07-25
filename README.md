@@ -55,6 +55,3 @@ systemctl restart docker
 值得注意的一点是：我们并不建议在这里添加一个新的注册表，此种配置手段会导致无法正常使用镜像的搜索功能。建议优先选择将地址配置为原有注册表的镜像URL。
 
 如果这个网站对你有用的话，可以稍微请我喝杯咖啡，谢谢（）
-
-![这是图片](https://image.cloudyun.top/i/2024/07/25/xla4d4.jpg "Magic Gardens")
-
