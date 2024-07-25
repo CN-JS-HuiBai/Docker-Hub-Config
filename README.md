@@ -46,11 +46,7 @@ systemctl restart docker
 
 ![这是图片](https://image.cloudyun.top/i/2024/07/10/xmpzfe.png "Magic Gardens")
 
-点击设置按钮：
-
-![这是图片](https://image.cloudyun.top/i/2024/07/10/xmq6nx.png "Magic Gardens")
-
-选择你当前正在使用的Docker注册表，点击编辑按钮，在注册表镜像URL中填入：[https://v1.hub.littlediary.cn](https://v1.hub.littlediary.cn)
+点击设置按钮：选择你当前正在使用的Docker注册表，点击编辑按钮，在注册表镜像URL中填入：[https://v1.hub.littlediary.cn](https://v1.hub.littlediary.cn)
 
 ![这是图片](https://image.cloudyun.top/i/2024/07/10/xmqcs8.png "Magic Gardens")
 
